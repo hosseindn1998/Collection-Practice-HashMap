@@ -32,7 +32,32 @@ public class Permutations {
         }
 
     }
+    public void printPermutations(String word) {
+        HashMap<Character, Integer> charCount = new HashMap<>();
+        for (char c : word.toCharArray()) {
+            charCount.put(c, charCount.getOrDefault(c, 0) + 1);
+        }
+        printPermutationsHelper(charCount, "", word.length());
+    }
 
+    public void printPermutationsHelper(HashMap<Character, Integer> charCount, String prefix, int remaining) {
+
+        if (remaining == 0) {
+            System.out.println(prefix);
+            setPermutationHashMap(stringCounter,prefix);
+            stringCounter++;
+            return ;
+        }
+
+        for (char c : charCount.keySet()) {
+            int count = charCount.get(c);
+            if (count > 0) {
+                charCount.put(c, count - 1);
+                printPermutationsHelper(charCount, prefix + c, remaining - 1);
+                charCount.put(c, count);
+            }
+        }
+    }
 
 
 }
